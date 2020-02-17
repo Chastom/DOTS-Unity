@@ -11,7 +11,7 @@ public class CookieSpawnerAuthoring : MonoBehaviour, IConvertGameObjectToEntity,
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        CookieSpawner spawner = new CookieSpawner();
+        CookieSpawnerData spawner = new CookieSpawnerData();
         spawner.Counter = Counter;
         spawner.InitialCounter = Counter;
         spawner.Entity = conversionSystem.GetPrimaryEntity(CookiePrefab);

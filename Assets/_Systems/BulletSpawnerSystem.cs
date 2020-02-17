@@ -7,7 +7,7 @@ using Unity.Transforms;
 using UnityEngine;
 using Random = System.Random;
 
-public class CookieSpawnerSystem : JobComponentSystem
+public class BulletSpawnerSystem : JobComponentSystem
 {
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {

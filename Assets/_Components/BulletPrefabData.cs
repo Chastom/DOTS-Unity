@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
-public struct CookieSpawner : IComponentData
+[GenerateAuthoringComponent]
+public struct BulletPrefabData : IComponentData
 {
     public Entity Entity;
-    public float Counter;
-    public float InitialCounter;
 }
