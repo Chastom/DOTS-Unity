@@ -5,15 +5,12 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-using Random = System.Random;
 
-public class BulletSpawnerSystem : JobComponentSystem
+public class BulletMoveSystem : JobComponentSystem
 {
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
-        var deltaTime = Time.DeltaTime;
-        Random r = new Random();
-
+        /* 
         var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
         var entityCommandBuffer = ecbSystem.CreateCommandBuffer();
 
@@ -34,7 +31,23 @@ public class BulletSpawnerSystem : JobComponentSystem
             }
 
         }).Run();
+        */
 
-        return inputDeps;
+        var deltaTime = Time.DeltaTime;
+
+        var system = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
+        var entityCommandBuffer = system.CreateCommandBuffer().ToConcurrent();
+
+        var output = Entities.ForEach((ref BulletMove bulletMove, ref Translation translation) =>
+        {
+            translation.Value += bulletMove.MoveDirection * bulletMove.Speed * deltaTime;
+
+        }).Schedule(inputDeps);
+
+        output.Complete();
+
+        system.AddJobHandleForProducer(output);
+
+        return output;
     }
 }

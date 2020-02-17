@@ -13,6 +13,7 @@ public class CookieSpawnerSystem : JobComponentSystem
     {
         var deltaTime = Time.DeltaTime;
         Random r = new Random();
+        var randomPosRatio = r.NextDouble();
 
         var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
         var entityCommandBuffer = ecbSystem.CreateCommandBuffer();
@@ -25,7 +26,7 @@ public class CookieSpawnerSystem : JobComponentSystem
             {
                 var instance = entityCommandBuffer.Instantiate(cookieSpawner.Entity);
 
-                var position = new float3(10 - (float)r.NextDouble() * 20, 10, 5);
+                var position = new float3(10 - (float)randomPosRatio * 20, 10, 5);
                 //var position = new float3(0, 10, 5);
 
                 entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
