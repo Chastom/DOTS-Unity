@@ -155,7 +155,7 @@ MonoBehaviour:
     type: 3}
   Counter: 1
   CookieDestroyPosY: 0
-  CookieDamage: 6
+  CookieDamage: 10
 --- !u!4 &1953361680
 Transform:
   m_ObjectHideFlags: 0
