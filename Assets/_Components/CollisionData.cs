@@ -8,4 +8,5 @@ using UnityEngine;
 public struct CollisionData : IComponentData
 {
     public bool IsHit;
+    public bool DestroyOnHit;
 }
