@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerDataSingletone : MonoBehaviour
 {
     public static PlayerDataSingletone instance = null;
     public GameObject HealthBar;
+    public GameObject HealthVignette;
     public float HP = 100;
     public float HealthPointsIncrementSize = 1;
     public float HealthPointsIncrementTime = 2;
@@ -21,6 +23,11 @@ public class PlayerDataSingletone : MonoBehaviour
             instance = this;
         else if (instance != null)
             Destroy(gameObject);
+    }
+
+    public void Start()
+    {
+        HealthVignette.SetActive(true);
     }
 
     public void FixedUpdate()
@@ -61,6 +68,7 @@ public class PlayerDataSingletone : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        HealthBar.transform.localScale = new Vector3(1f, -(HP / 100));
+        HealthVignette.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1 - HP/100);
+        //HealthBar.transform.localScale = new Vector3(1f, -(HP / 100));
     }
 }
