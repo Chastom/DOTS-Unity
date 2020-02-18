@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -4087858783415150328}
   - component: {fileID: 2246959088509899187}
   m_Layer: 0
-  m_Name: FatCookie
+  m_Name: CookieFat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 36ada4a8e5c00744bbd32240d7ec088b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
     x: 0
-    y: -1
+    y: -0.8
     z: 0
   m_InitialAngularVelocity:
     x: 0
@@ -218,8 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d342e27505cf6bf4891dc5f20a41e3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsHit: 0
-  DestroyOnHit: 1
+  Hp: 2
 --- !u!114 &-4087858783415150328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,3 +245,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 409316ffdaa06d04380a3424e173b100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DontUseThis: 0

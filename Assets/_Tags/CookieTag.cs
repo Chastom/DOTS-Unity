@@ -2,5 +2,6 @@
 
 [GenerateAuthoringComponent]
 public struct CookieTag : IComponentData
-{    
+{
+    public byte DontUseThis;
 }

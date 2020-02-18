@@ -14,17 +14,31 @@ public class CookieSpawnerSystem : JobComponentSystem
         var deltaTime = Time.DeltaTime;
         Random r = new Random();
         var randomPosRatio = r.NextDouble();
+        var randomCookieIndex = r.Next(3);
+
 
         var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
         var entityCommandBuffer = ecbSystem.CreateCommandBuffer();
 
-        Entities.WithoutBurst().ForEach((ref CookieSpawnerData cookieSpawner, ref Translation translation) =>
-        {           
+        Entities.WithoutBurst().ForEach((ref CookieSpawnerData cookieSpawner) =>
+        { 
             cookieSpawner.CurrentSpawnTimer -= deltaTime;
 
             if (cookieSpawner.CurrentSpawnTimer <= 0)
             {
-                var instance = entityCommandBuffer.Instantiate(cookieSpawner.Entity);
+                Entity instance = new Entity();
+
+                Debug.Log("randomCookieIndex: " + randomCookieIndex);
+
+                switch (randomCookieIndex)
+                {
+                    case 0: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); break;
+                    case 1: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFat); break;
+                    case 2: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFast); break;
+
+                    default: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); Debug.Log("Bad!@!@!@!@ Wrong cookie index"); break;
+
+                }
 
                 var position = new float3(10 - (float)randomPosRatio * 20, 10, 5);
                 entityCommandBuffer.SetComponent(instance, new Translation { Value = position });

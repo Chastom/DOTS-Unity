@@ -151,8 +151,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e535f10aff4bd77488ff069afe831429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CookiePrefab: {fileID: 6405411197115529760, guid: 251767a04fbd6d243b36e0d97521f7ab,
-    type: 3}
+  CookiePrefabs:
+  - {fileID: 6405411197115529760, guid: 251767a04fbd6d243b36e0d97521f7ab, type: 3}
+  - {fileID: 6405411197115529760, guid: 0e003fc2cef29b0478a7718c154b77e2, type: 3}
+  - {fileID: 6405411197115529760, guid: 5a0df78835136f7429523748eaac1df3, type: 3}
   SpawnTime: 0.5
 --- !u!4 &1953361680
 Transform:

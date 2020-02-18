@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -4087858783415150328}
   - component: {fileID: 2246959088509899187}
   m_Layer: 0
-  m_Name: Cookie
+  m_Name: CookieFast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 6405411197115529760}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 0.6, z: 3}
+  m_LocalScale: {x: 2, y: 0.5, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f1aa822743e81894aaff6fb3634226dd, type: 2}
+  - {fileID: 2100000, guid: 50f4fe21fbe0ece4b943c87e71bea675, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
     x: 0
-    y: -1.2
+    y: -2
     z: 0
   m_InitialAngularVelocity:
     x: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d342e27505cf6bf4891dc5f20a41e3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 2
+  Hp: 1
 --- !u!114 &-4087858783415150328
 MonoBehaviour:
   m_ObjectHideFlags: 0
