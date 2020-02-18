@@ -37,6 +37,7 @@ public class GunSystem : JobComponentSystem
                 var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
                 var entityCommandBuffer = ecbSystem.CreateCommandBuffer();
 
+ 
                 quaternion bulletRot = quaternion.LookRotation(moveDirection, Vector3.up);
 
                 Entities.WithoutBurst().ForEach((ref BulletPrefabData bulletPrefabData, ref Translation translation) =>
