@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
-public struct CookieTag : IComponentData 
+[GenerateAuthoringComponent]
+public struct CookieDeleteOutScreen : IComponentData 
 {
     public float DestroyPosY;
     public int Damage;

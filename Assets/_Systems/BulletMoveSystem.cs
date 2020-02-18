@@ -10,29 +10,6 @@ public class BulletMoveSystem : JobComponentSystem
 {
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
-        /* 
-        var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
-        var entityCommandBuffer = ecbSystem.CreateCommandBuffer();
-
-        Entities.WithoutBurst().ForEach((ref CookieSpawnerData cookieSpawner, ref Translation translation) =>
-        {           
-            cookieSpawner.Counter -= deltaTime;
-
-            if (cookieSpawner.Counter <= 0)
-            {
-                var instance = entityCommandBuffer.Instantiate(cookieSpawner.Entity);
-
-                var position = new float3(10 - (float)r.NextDouble() * 20, 10, 5);
-                //var position = new float3(0, 10, 5);
-
-                entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
-
-                cookieSpawner.Counter = cookieSpawner.InitialCounter;
-            }
-
-        }).Run();
-        */
-
         var deltaTime = Time.DeltaTime;
 
         var system = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
@@ -41,8 +18,6 @@ public class BulletMoveSystem : JobComponentSystem
         var output = Entities.ForEach((ref BulletMove bulletMove, ref Translation translation, ref Rotation rotation) =>
         {
             translation.Value += bulletMove.MoveDirection * bulletMove.Speed * deltaTime;
-            //rotation.Value = new Quaternion(0, 0, 0, 0);
-
         }).Schedule(inputDeps);
 
         output.Complete();

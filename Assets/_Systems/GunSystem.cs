@@ -43,17 +43,14 @@ public class GunSystem : JobComponentSystem
                 {
                     var instance = entityCommandBuffer.Instantiate(bulletPrefabData.Entity);
 
-
                     entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos });
                     entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
                     entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
-                    //entityCommandBuffer.AddComponent(instance, new CollisionData { IsHit = false });
 
                 }).Run();
 
             }
 
-            //Debug.Log(distanceToPlane.ToString()+ " | X:" + hitPos.x + " | Y:" +  hitPos.y);
             Debug.DrawLine(Camera.transform.position, hitPos, Color.red, 10f, false);
 
         }

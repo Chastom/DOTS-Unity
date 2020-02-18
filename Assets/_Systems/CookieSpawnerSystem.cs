@@ -20,24 +20,16 @@ public class CookieSpawnerSystem : JobComponentSystem
 
         Entities.WithoutBurst().ForEach((ref CookieSpawnerData cookieSpawner, ref Translation translation) =>
         {           
-            cookieSpawner.Counter -= deltaTime;
+            cookieSpawner.CurrentSpawnTimer -= deltaTime;
 
-            if (cookieSpawner.Counter <= 0)
+            if (cookieSpawner.CurrentSpawnTimer <= 0)
             {
                 var instance = entityCommandBuffer.Instantiate(cookieSpawner.Entity);
 
                 var position = new float3(10 - (float)randomPosRatio * 20, 10, 5);
-                //var position = new float3(0, 10, 5);
-
                 entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
 
-                //entityCommandBuffer.AddComponent(instance, new CollisionData { IsHit = false });
-
-                CookieTag cookieTag = new CookieTag { DestroyPosY = cookieSpawner.DestroyPosY, Damage = cookieSpawner.Damage };
-                entityCommandBuffer.AddComponent(instance, cookieTag);
-                //entityCommandBuffer.AddComponent(instance, cookieSpawner);
-
-                cookieSpawner.Counter = cookieSpawner.InitialCounter;
+                cookieSpawner.CurrentSpawnTimer = cookieSpawner.SpawnTime;
             }
 
         }).Run();
