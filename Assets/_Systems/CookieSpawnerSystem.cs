@@ -31,7 +31,7 @@ public class CookieSpawnerSystem : JobComponentSystem
 
                 entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
 
-                entityCommandBuffer.AddComponent(instance, new CollisionData { IsHit = false });
+                //entityCommandBuffer.AddComponent(instance, new CollisionData { IsHit = false });
 
                 CookieTag cookieTag = new CookieTag { DestroyPosY = cookieSpawner.DestroyPosY, Damage = cookieSpawner.Damage };
                 entityCommandBuffer.AddComponent(instance, cookieTag);
