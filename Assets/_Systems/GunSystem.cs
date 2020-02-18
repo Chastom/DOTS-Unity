@@ -43,7 +43,7 @@ public class GunSystem : JobComponentSystem
 
                     entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos });
                     entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
-                    entityCommandBuffer.AddComponent(instance, new CollisionData { IsHit = false });
+                    //entityCommandBuffer.AddComponent(instance, new CollisionData { IsHit = false });
 
                 }).Run();
 

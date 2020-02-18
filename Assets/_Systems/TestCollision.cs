@@ -13,11 +13,11 @@ public class TestCollision : JobComponentSystem
         var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
         var entityCommandBuffer = ecbSystem.CreateCommandBuffer().ToConcurrent();
 
-        var forEachHandler = Entities.ForEach((int entityInQueryIndex, ref CollisionData collisionData) =>
+        var forEachHandler = Entities.ForEach((int entityInQueryIndex, Entity entity, ref CollisionData collisionData) =>
         {
-            if (collisionData.IsHit)
+            if (collisionData.IsHit && collisionData.DestroyOnHit)
             {
-                //destroy entity...
+                entityCommandBuffer.DestroyEntity(entityInQueryIndex, entity);
             }
 
         }).Schedule(inputDeps);
