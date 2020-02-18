@@ -6,6 +6,7 @@ using UnityEngine;
 public class CookieSpawnerAuthoring : MonoBehaviour, IConvertGameObjectToEntity, IDeclareReferencedPrefabs
 {
     public GameObject CookiePrefab;
+
     public float SpawnTime;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
@@ -16,6 +17,7 @@ public class CookieSpawnerAuthoring : MonoBehaviour, IConvertGameObjectToEntity,
         spawner.Entity = conversionSystem.GetPrimaryEntity(CookiePrefab);
 
         dstManager.AddComponentData(entity, spawner);
+
     }
 
     public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
