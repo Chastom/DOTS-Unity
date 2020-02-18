@@ -7,13 +7,16 @@ public class CookieSpawnerAuthoring : MonoBehaviour, IConvertGameObjectToEntity,
 {
     public GameObject CookiePrefab;
     public float Counter;
-
+    public float CookieDestroyPosY;
+    public int CookieDamage;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         CookieSpawnerData spawner = new CookieSpawnerData();
         spawner.Counter = Counter;
         spawner.InitialCounter = Counter;
+        spawner.DestroyPosY = CookieDestroyPosY;
+        spawner.Damage = CookieDamage;
         spawner.Entity = conversionSystem.GetPrimaryEntity(CookiePrefab);
 
         dstManager.AddComponentData(entity, spawner);

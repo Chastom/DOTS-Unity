@@ -154,6 +154,8 @@ MonoBehaviour:
   CookiePrefab: {fileID: 6405411197115529760, guid: 251767a04fbd6d243b36e0d97521f7ab,
     type: 3}
   Counter: 1
+  CookieDestroyPosY: 0
+  CookieDamage: 6
 --- !u!4 &1953361680
 Transform:
   m_ObjectHideFlags: 0
