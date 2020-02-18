@@ -52,6 +52,7 @@ public class PlayerDataSingletone : MonoBehaviour
             UpdateHealthBar();
         else
         {
+            HP = 0;
             UpdateHealthBar();
             Time.timeScale = 0; // Stop game xd
             GameOverText.SetActive(true);

@@ -38,9 +38,10 @@ public class BulletMoveSystem : JobComponentSystem
         var system = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
         var entityCommandBuffer = system.CreateCommandBuffer().ToConcurrent();
 
-        var output = Entities.ForEach((ref BulletMove bulletMove, ref Translation translation) =>
+        var output = Entities.ForEach((ref BulletMove bulletMove, ref Translation translation, ref Rotation rotation) =>
         {
             translation.Value += bulletMove.MoveDirection * bulletMove.Speed * deltaTime;
+            //rotation.Value = new Quaternion(0, 0, 0, 0);
 
         }).Schedule(inputDeps);
 
