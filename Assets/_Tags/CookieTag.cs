@@ -2,5 +2,5 @@
 
 [GenerateAuthoringComponent]
 public struct CookieTag : IComponentData
-{
+{    
 }

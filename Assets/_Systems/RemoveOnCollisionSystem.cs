@@ -6,19 +6,20 @@ using Unity.Mathematics;
 using Unity.Physics;
 using UnityEngine;
 
-public class TestCollision : JobComponentSystem
+public class RemoveOnCollisionSystem : JobComponentSystem
 {
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
         var entityCommandBuffer = ecbSystem.CreateCommandBuffer().ToConcurrent();
 
-        var forEachHandler = Entities.ForEach((int entityInQueryIndex, Entity entity, ref CollisionData collisionData) =>
+        var forEachHandler = Entities.ForEach((int entityInQueryIndex, Entity entity, ref HealthPoints healthPoints) =>
         {
-            if (collisionData.IsHit && collisionData.DestroyOnHit)
+            if (healthPoints.Hp < 1)
             {
                 entityCommandBuffer.DestroyEntity(entityInQueryIndex, entity);
             }
+
 
         }).Schedule(inputDeps);
 

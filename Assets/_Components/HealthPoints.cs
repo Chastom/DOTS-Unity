@@ -5,8 +5,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 [GenerateAuthoringComponent]
-public struct CollisionData : IComponentData
+public struct HealthPoints : IComponentData
 {
-    public bool IsHit;
-    public bool DestroyOnHit;
+    public int Hp;
 }

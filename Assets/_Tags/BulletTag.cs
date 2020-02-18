@@ -3,4 +3,5 @@
 [GenerateAuthoringComponent]
 public struct BulletTag : IComponentData
 {
+    public byte DontUseThis;
 }
