@@ -30,6 +30,7 @@ public class CookieSpawnerSystem : JobComponentSystem
                 //var position = new float3(0, 10, 5);
 
                 entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
+                entityCommandBuffer.AddComponent(instance, new CollisionData { IsHit = false });
 
                 cookieSpawner.Counter = cookieSpawner.InitialCounter;
             }
