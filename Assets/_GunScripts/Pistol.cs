@@ -8,6 +8,17 @@ using UnityEngine;
 
 public class Pistol : JobComponentSystem
 {
+    private float FireRate = 0.75f;
+    private float ReloadTime = 0;
+    private bool IsShooting = false;
+    public static int InitialAmmo = 10;
+    public static int CurrentAmmo;
+
+    protected override void OnCreate()
+    {
+        CurrentAmmo = InitialAmmo;
+    }
+
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         if (GunManager.instance.CurrentGun == Gun.Pistol && Input.GetMouseButtonDown(0))
@@ -46,5 +57,10 @@ public class Pistol : JobComponentSystem
 
         }
         return inputDeps;
+    }
+
+    public void UpdateAmmoText()
+    {
+        PlayerDataSingletone.instance.UpdateAmmo("∞");
     }
 }

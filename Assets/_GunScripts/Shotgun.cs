@@ -5,15 +5,16 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-
-public class MachineGun : JobComponentSystem
+using Random = System.Random;
+public class Shotgun : JobComponentSystem
 {
-    private float FireRate = 0.1f;
+    private float FireRate = 0.75f;
     private float ReloadTime = 0;
-    private bool IsShooting = false;
-    public static int InitialAmmo = 50;
+    public static int InitialAmmo = 10;
     public static int CurrentAmmo;
+    private readonly float spreadRatio = 2.5f;
 
+    Random r = new Random();
     protected override void OnCreate()
     {
         CurrentAmmo = InitialAmmo;
@@ -21,17 +22,9 @@ public class MachineGun : JobComponentSystem
 
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            IsShooting = true;
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            IsShooting = false;
-        }
 
-        if (GunManager.instance.CurrentGun == Gun.MachineGun && IsShooting && ReloadTime <= 0)
-        {            
+        if (GunManager.instance.CurrentGun == Gun.Shotgun && Input.GetMouseButtonDown(0) && ReloadTime <= 0)
+        {
             Vector3 mousePosition = Input.mousePosition;
             Ray ray = GunManager.instance.Camera.ScreenPointToRay(mousePosition);
             float distanceToPlane;
@@ -52,12 +45,17 @@ public class MachineGun : JobComponentSystem
 
                 Entities.WithoutBurst().ForEach((ref BulletPrefabData bulletPrefabData, ref Translation translation) =>
                 {
-                    var instance = entityCommandBuffer.Instantiate(bulletPrefabData.Entity);
-
-                    entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos });
-                    entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
-                    entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
-                    entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 1 });
+                    for (int x = 0; x < 100; x++)
+                    {
+                        var instance = entityCommandBuffer.Instantiate(bulletPrefabData.Entity);
+                        var offset = new Vector3((float)r.NextDouble() * spreadRatio, (float)r.NextDouble()*spreadRatio, (float)r.NextDouble()* spreadRatio);
+                        entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos+offset });
+                        entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
+                        //entityCommandBuffer.SetComponent(instance, new HealthPoints { Hp = 9000 });
+                        entityCommandBuffer.AddComponent(instance, new Scale { Value = 0.2f });
+                        entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
+                        entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 1 });
+                    }
 
                 }).Run();
             }
@@ -79,5 +77,10 @@ public class MachineGun : JobComponentSystem
             ReloadTime -= Time.DeltaTime;
         }
         return inputDeps;
+    }
+
+    public void UpdateAmmoText()
+    {
+        PlayerDataSingletone.instance.UpdateAmmo(CurrentAmmo + "/" + InitialAmmo);
     }
 }
