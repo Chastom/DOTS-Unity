@@ -57,6 +57,7 @@ public class MachineGun : JobComponentSystem
                     entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos });
                     entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
                     entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
+                    entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 1 });
 
                 }).Run();
             }
@@ -75,6 +76,11 @@ public class MachineGun : JobComponentSystem
         if (ReloadTime > 0)
         {
             ReloadTime -= Time.DeltaTime;
+        }
+        //reseting ammo on weapon swap (if ammo is not full)
+        if(GunManager.instance.CurrentGun != Gun.MachineGun && CurrentAmmo != InitialAmmo)
+        {
+            CurrentAmmo = InitialAmmo;
         }
         return inputDeps;
     }

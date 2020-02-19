@@ -16,19 +16,31 @@ public class CollisionSystem : JobComponentSystem
         public ComponentDataFromEntity<BulletTag> bullet;
         public ComponentDataFromEntity<CookieChangeWeapon> cookieWeapon;
 
+        public ComponentDataFromEntity<BulletDamage> dmg;
 
         public void Execute(CollisionEvent triggerEvent)
         {
             Entity entityA = triggerEvent.Entities.EntityA;
             Entity entityB = triggerEvent.Entities.EntityB;
 
+            BulletDamage bulletDamage;
+
             if (bullet.HasComponent(entityA) || bullet.HasComponent(entityB))
             {
+                //checking which entity is a bullet
+                if (bullet.HasComponent(entityA))
+                {
+                    bulletDamage = dmg[entityA];
+                }
+                else
+                {
+                    bulletDamage = dmg[entityB];
+                }
                 HealthPoints coll1 = collisionData[entityA];
                 HealthPoints coll2 = collisionData[entityB];
 
-                coll1 = new HealthPoints { Hp = coll1.Hp - 1 };
-                coll2 = new HealthPoints { Hp = coll2.Hp - 1 };
+                coll1 = new HealthPoints { Hp = coll1.Hp - bulletDamage.Damage };
+                coll2 = new HealthPoints { Hp = coll2.Hp - bulletDamage.Damage };
                 //Debug.Log("Object 1 -> " + coll1.HealthPoints + " | Object 2 -> " + coll2.HealthPoints);
 
                 collisionData[entityA] = coll1;
@@ -73,7 +85,8 @@ public class CollisionSystem : JobComponentSystem
         {
             collisionData = GetComponentDataFromEntity<HealthPoints>(),
             bullet = GetComponentDataFromEntity<BulletTag>(),
-            cookieWeapon = GetComponentDataFromEntity<CookieChangeWeapon>()
+            cookieWeapon = GetComponentDataFromEntity<CookieChangeWeapon>(),
+            dmg = GetComponentDataFromEntity<BulletDamage>()
         };
 
         var output = triggerJob.Schedule(stepPhysicsWorld.Simulation, ref buildPhysicsWorld.PhysicsWorld, inputDeps);

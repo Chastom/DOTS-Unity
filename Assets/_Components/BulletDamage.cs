@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
+[GenerateAuthoringComponent]
 public struct BulletDamage : IComponentData
 {
     public int Damage;
