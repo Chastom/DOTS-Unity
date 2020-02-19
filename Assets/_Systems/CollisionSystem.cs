@@ -55,8 +55,8 @@ public class CollisionSystem : JobComponentSystem
 
                 if (cookieChangeWeapon.ReceiveGun)
                 {
-                    if (GunManager.instance.CurrentGun == cookieChangeWeapon.GunOnDeath)
-                        GunManager.instance.ChangeGun(Gun.Pistol);
+                    //if (GunManager.instance.CurrentGun == cookieChangeWeapon.GunOnDeath)
+                    //    GunManager.instance.ChangeGun(Gun.Pistol);
 
                     GunManager.instance.ChangeGun(cookieChangeWeapon.GunOnDeath);
 
