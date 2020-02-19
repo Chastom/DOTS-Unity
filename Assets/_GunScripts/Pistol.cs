@@ -8,15 +8,6 @@ using UnityEngine;
 
 public class Pistol : JobComponentSystem
 {
-    private float FireRate = 5f;
-    private float ReloadTime = 0;
-    private GunManager gunManager;
-
-    protected override void OnCreate()
-    {
-        gunManager = GunManager.instance; // doesnt work
-    }
-
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         if (GunManager.instance.CurrentGun == Gun.Pistol && Input.GetMouseButtonDown(0))
@@ -46,6 +37,7 @@ public class Pistol : JobComponentSystem
                     entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos });
                     entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
                     entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
+                    entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 2 });
 
                 }).Run();
             }
