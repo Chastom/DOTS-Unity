@@ -9,6 +9,11 @@ public struct CookieSpawnerData : IComponentData
     public Entity cookieFat;
     public Entity cookieFast;
 
+    public Entity cookieMashineGun;
+    public Entity cookieShotgun;
+
+
+
     public float CurrentSpawnTimer;
     public float SpawnTime;
 }

@@ -18,6 +18,10 @@ public class CookieSpawnerAuthoring : MonoBehaviour, IConvertGameObjectToEntity,
         spawner.cookieNormal = conversionSystem.GetPrimaryEntity(CookiePrefabs[0]);
         spawner.cookieFat = conversionSystem.GetPrimaryEntity(CookiePrefabs[1]);
         spawner.cookieFast = conversionSystem.GetPrimaryEntity(CookiePrefabs[2]);
+        
+        spawner.cookieMashineGun= conversionSystem.GetPrimaryEntity(CookiePrefabs[3]);
+        spawner.cookieShotgun = conversionSystem.GetPrimaryEntity(CookiePrefabs[4]);
+
 
 
         dstManager.AddComponentData(entity, spawner);

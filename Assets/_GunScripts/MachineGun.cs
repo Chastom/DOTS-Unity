@@ -29,7 +29,7 @@ public class MachineGun : JobComponentSystem
         {
             IsShooting = false;
         }
-        Debug.Log("IsShooting: " + IsShooting);
+
         if (GunManager.instance.CurrentGun == Gun.MachineGun && IsShooting && ReloadTime <= 0)
         {            
             Vector3 mousePosition = Input.mousePosition;

@@ -14,11 +14,14 @@ public class CollisionSystem : JobComponentSystem
     {
         public ComponentDataFromEntity<HealthPoints> collisionData;
         public ComponentDataFromEntity<BulletTag> bullet;
+        public ComponentDataFromEntity<CookieChangeWeapon> cookieWeapon;
+
 
         public void Execute(CollisionEvent triggerEvent)
         {
             Entity entityA = triggerEvent.Entities.EntityA;
             Entity entityB = triggerEvent.Entities.EntityB;
+
             if (bullet.HasComponent(entityA) || bullet.HasComponent(entityB))
             {
                 HealthPoints coll1 = collisionData[entityA];
@@ -30,7 +33,26 @@ public class CollisionSystem : JobComponentSystem
 
                 collisionData[entityA] = coll1;
                 collisionData[entityB] = coll2;
+
+                
+                if (cookieWeapon.HasComponent(entityA))
+                {
+                    if (cookieWeapon[entityA].ReceiveGun)
+                        GunManager.instance.ChangeGun(cookieWeapon[entityA].GunOnDeath);
+                }
+                else
+                {
+                    if (cookieWeapon[entityB].ReceiveGun)
+                        GunManager.instance.ChangeGun(cookieWeapon[entityB].GunOnDeath);
+                }
+
+
             }
+
+
+
+
+
         }
 
     }
@@ -50,7 +72,8 @@ public class CollisionSystem : JobComponentSystem
         CollisionJob triggerJob = new CollisionJob
         {
             collisionData = GetComponentDataFromEntity<HealthPoints>(),
-            bullet = GetComponentDataFromEntity<BulletTag>()
+            bullet = GetComponentDataFromEntity<BulletTag>(),
+            cookieWeapon = GetComponentDataFromEntity<CookieChangeWeapon>()
         };
 
         var output = triggerJob.Schedule(stepPhysicsWorld.Simulation, ref buildPhysicsWorld.PhysicsWorld, inputDeps);

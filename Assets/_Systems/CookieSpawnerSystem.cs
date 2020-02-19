@@ -14,7 +14,7 @@ public class CookieSpawnerSystem : JobComponentSystem
         var deltaTime = Time.DeltaTime;
         Random r = new Random();
         var randomPosRatio = r.NextDouble();
-        var randomCookieIndex = r.Next(3);
+        var randomCookieIndex = r.Next(5);
 
 
         var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
@@ -35,6 +35,8 @@ public class CookieSpawnerSystem : JobComponentSystem
                     case 0: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); break;
                     case 1: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFat); break;
                     case 2: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFast); break;
+                    case 3: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieMashineGun); break;
+                    case 4: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieShotgun); break;
 
                     default: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); Debug.Log("Bad!@!@!@!@ Wrong cookie index"); break;
 

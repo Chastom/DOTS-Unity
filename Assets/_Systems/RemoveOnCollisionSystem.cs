@@ -10,7 +10,7 @@ public class RemoveOnCollisionSystem : JobComponentSystem
 {
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
-        var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
+        var ecbSystem = World.GetExistingSystem<EndSimulationEntityCommandBufferSystem>();
         var entityCommandBuffer = ecbSystem.CreateCommandBuffer().ToConcurrent();
 
         var forEachHandler = Entities.ForEach((int entityInQueryIndex, Entity entity, ref HealthPoints healthPoints) =>

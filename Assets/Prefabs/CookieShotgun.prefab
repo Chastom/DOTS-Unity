@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 5746624727817248404}
   - component: {fileID: -4087858783415150328}
   - component: {fileID: 2246959088509899187}
-  - component: {fileID: 4413700686748617703}
+  - component: {fileID: -7835489031283495273}
   m_Layer: 0
-  m_Name: Cookie
+  m_Name: CookieShotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 6405411197115529760}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 0.6, z: 3}
+  m_LocalScale: {x: 3, y: 0.7, z: 3}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f1aa822743e81894aaff6fb3634226dd, type: 2}
+  - {fileID: 2100000, guid: 16426b094ebfd38408fcf3af436ee8f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
     x: 0
-    y: -1.2
+    y: -0.8
     z: 0
   m_InitialAngularVelocity:
     x: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DontUseThis: 0
---- !u!114 &4413700686748617703
+--- !u!114 &-7835489031283495273
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -259,5 +259,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628a98dc4c276634ca14e896aa9b745d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ReceiveGun: 0
-  GunOnDeath: 0
+  ReceiveGun: 1
+  GunOnDeath: 2
