@@ -59,7 +59,6 @@ public class CollisionSystem : JobComponentSystem
                     //    GunManager.instance.ChangeGun(Gun.Pistol);
 
                     GunManager.instance.ChangeGun(cookieChangeWeapon.GunOnDeath);
-
                 }
 
 

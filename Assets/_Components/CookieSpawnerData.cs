@@ -16,4 +16,5 @@ public struct CookieSpawnerData : IComponentData
 
     public float CurrentSpawnTimer;
     public float SpawnTime;
+    public float SpawnPosY;
 }

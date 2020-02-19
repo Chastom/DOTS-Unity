@@ -28,8 +28,6 @@ public class CookieSpawnerSystem : JobComponentSystem
             {
                 Entity instance = new Entity();
 
-                //Debug.Log("randomCookieIndex: " + randomCookieIndex);
-
                 switch (randomCookieIndex)
                 {
                     case 0: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); break;
@@ -42,7 +40,7 @@ public class CookieSpawnerSystem : JobComponentSystem
 
                 }
 
-                var position = new float3(10 - (float)randomPosRatio * 20, 10, 5);
+                var position = new float3(10 - (float)randomPosRatio * 20, cookieSpawner.SpawnPosY, 5);
                 entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
 
                 cookieSpawner.CurrentSpawnTimer = cookieSpawner.SpawnTime;

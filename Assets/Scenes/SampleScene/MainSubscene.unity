@@ -158,6 +158,7 @@ MonoBehaviour:
   - {fileID: 6405411197115529760, guid: 6ed9c3f4c6ec84c49b7c518b178b7ef0, type: 3}
   - {fileID: 6405411197115529760, guid: 139965688b661364b8279f73363fb733, type: 3}
   SpawnTime: 0.5
+  SpawnPosY: 13
 --- !u!4 &1953361680
 Transform:
   m_ObjectHideFlags: 0
