@@ -1357,7 +1357,7 @@ MonoBehaviour:
   HealthPointsIncrementTime: 0.1
   EnemiesKilled: 0
   GameOverText: {fileID: 293259381032905373}
-  AmmoText: {fileID: 921368260}
+  AmmoTextGO: {fileID: 921368260}
 --- !u!1 &5961470295876798235
 GameObject:
   m_ObjectHideFlags: 0

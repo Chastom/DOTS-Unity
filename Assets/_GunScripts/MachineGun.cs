@@ -80,9 +80,4 @@ public class MachineGun : JobComponentSystem
         }
         return inputDeps;
     }
-
-    public void UpdateAmmoText()
-    {
-        PlayerDataSingletone.instance.UpdateAmmo(CurrentAmmo + "/" + InitialAmmo);
-    }
 }

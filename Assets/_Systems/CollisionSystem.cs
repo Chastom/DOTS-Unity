@@ -57,17 +57,16 @@ public class CollisionSystem : JobComponentSystem
                 {
                     //it already has the same gun, so we need to reset its ammo
                     Gun gun = GunManager.instance.CurrentGun;
-                    if (gun == cookieChangeWeapon.GunOnDeath)
+                    switch (gun)
                     {
-                        switch (gun)
-                        {
-                            case Gun.MachineGun:
-                                MachineGun.CurrentAmmo = MachineGun.InitialAmmo;
-                                break;
-                            default:
-                                break;
-                        }
+                        case Gun.MachineGun:
+                            MachineGun.CurrentAmmo = MachineGun.InitialAmmo;
+                            PlayerDataSingletone.instance.UpdateAmmo(MachineGun.CurrentAmmo + "/" + MachineGun.InitialAmmo);
+                            break;
+                        default:
+                            break;
                     }
+
                     GunManager.instance.ChangeGun(cookieChangeWeapon.GunOnDeath);
                 }
             }

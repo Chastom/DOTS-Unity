@@ -15,9 +15,11 @@ public class PlayerDataSingletone : MonoBehaviour
     public int EnemiesKilled = 0;
 
     public GameObject GameOverText;
-    public GameObject AmmoText;
+    public GameObject AmmoTextGO;    
 
     private float DummyTimer;
+    private TextMeshProUGUI AmmoText;
+    private string CurrentText;
 
     void Awake()
     {
@@ -30,6 +32,7 @@ public class PlayerDataSingletone : MonoBehaviour
     public void Start()
     {
         HealthVignette.SetActive(true);
+        AmmoText = AmmoTextGO.GetComponent<TextMeshProUGUI>();
     }
 
     public void FixedUpdate()
@@ -41,6 +44,7 @@ public class PlayerDataSingletone : MonoBehaviour
             AddHealth(HealthPointsIncrementSize);
             DummyTimer = HealthPointsIncrementTime;
         }
+        AmmoText.text = CurrentText;
     }
 
     public void AddHealth(float health)
@@ -76,6 +80,7 @@ public class PlayerDataSingletone : MonoBehaviour
 
     public void UpdateAmmo(string text)
     {
-        AmmoText.GetComponent<TextMeshProUGUI>().text = text;
+        CurrentText = text;
+        //AmmoText.text = text;
     }
 }
