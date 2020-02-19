@@ -28,7 +28,7 @@ public class CookieSpawnerSystem : JobComponentSystem
             {
                 Entity instance = new Entity();
 
-                Debug.Log("randomCookieIndex: " + randomCookieIndex);
+                //Debug.Log("randomCookieIndex: " + randomCookieIndex);
 
                 switch (randomCookieIndex)
                 {
