@@ -11,8 +11,8 @@ public class MachineGun : JobComponentSystem
     private float FireRate = 0.1f;
     private float ReloadTime = 0;
     private bool IsShooting = false;
-    private int InitialAmmo = 50;
-    private int CurrentAmmo;
+    public static int InitialAmmo = 50;
+    public static int CurrentAmmo;
 
     protected override void OnCreate()
     {
@@ -66,11 +66,11 @@ public class MachineGun : JobComponentSystem
             //after successful shot, we reset the reload time and remove ammo
             ReloadTime = FireRate;
             CurrentAmmo--;
-            UpdateAmmoText();
+            PlayerDataSingletone.instance.UpdateAmmo(CurrentAmmo + "/" + InitialAmmo); //Updates Ammo Text
             //if out of ammo, we reset the gun back to pistol, and reload ammo
-            if(CurrentAmmo == 0)
+            if (CurrentAmmo == 0)
             {
-                GunManager.instance.CurrentGun = Gun.Pistol;
+                GunManager.instance.ChangeGun(Gun.Pistol);
                 CurrentAmmo = InitialAmmo;
             }
         }
@@ -84,10 +84,5 @@ public class MachineGun : JobComponentSystem
             CurrentAmmo = InitialAmmo;
         }
         return inputDeps;
-    }
-
-    public void UpdateAmmoText()
-    {
-        PlayerDataSingletone.instance.UpdateAmmo(CurrentAmmo + "/" + InitialAmmo);
     }
 }
