@@ -88,6 +88,6 @@ public class MachineGun : JobComponentSystem
 
     public void UpdateAmmoText()
     {
-        PlayerDataSingletone.instance.UpdateAmmo(CurrentAmmo + "/" + InitialAmmo);
+        //PlayerDataSingletone.instance.UpdateAmmo(CurrentAmmo + "/" + InitialAmmo);
     }
 }

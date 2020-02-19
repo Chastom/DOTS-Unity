@@ -37,5 +37,6 @@ public enum Gun
     MachineGun,
     Shotgun,
     Lazer,
-    LightningGun
+    LightningGun,
+    GrenadeLauncher
 }

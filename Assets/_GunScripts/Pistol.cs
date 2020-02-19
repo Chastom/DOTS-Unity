@@ -52,6 +52,6 @@ public class Pistol : JobComponentSystem
 
     public void UpdateAmmoText()
     {
-        PlayerDataSingletone.instance.UpdateAmmo("∞");
+        //PlayerDataSingletone.instance.UpdateAmmo("∞");
     }
 }
