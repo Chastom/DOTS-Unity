@@ -260,4 +260,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ReceiveGun: 1
-  GunOnDeath: 2
+  GunOnDeath: 1

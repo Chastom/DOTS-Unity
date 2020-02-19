@@ -24,6 +24,8 @@ public class CollisionSystem : JobComponentSystem
             Entity entityB = triggerEvent.Entities.EntityB;
 
             BulletDamage bulletDamage;
+            CookieChangeWeapon cookieChangeWeapon;
+
 
             if (bullet.HasComponent(entityA) || bullet.HasComponent(entityB))
             {
@@ -31,11 +33,16 @@ public class CollisionSystem : JobComponentSystem
                 if (bullet.HasComponent(entityA))
                 {
                     bulletDamage = dmg[entityA];
+                    cookieChangeWeapon = cookieWeapon[entityB];
                 }
                 else
                 {
                     bulletDamage = dmg[entityB];
+                    cookieChangeWeapon = cookieWeapon[entityA];
+
                 }
+
+
                 HealthPoints coll1 = collisionData[entityA];
                 HealthPoints coll2 = collisionData[entityB];
 
@@ -46,17 +53,15 @@ public class CollisionSystem : JobComponentSystem
                 collisionData[entityA] = coll1;
                 collisionData[entityB] = coll2;
 
-                
-                if (cookieWeapon.HasComponent(entityA))
+                if (cookieChangeWeapon.ReceiveGun)
                 {
-                    if (cookieWeapon[entityA].ReceiveGun)
-                        GunManager.instance.ChangeGun(cookieWeapon[entityA].GunOnDeath);
+                    if (GunManager.instance.CurrentGun == cookieChangeWeapon.GunOnDeath)
+                        GunManager.instance.ChangeGun(Gun.Pistol);
+
+                    GunManager.instance.ChangeGun(cookieChangeWeapon.GunOnDeath);
+
                 }
-                else
-                {
-                    if (cookieWeapon[entityB].ReceiveGun)
-                        GunManager.instance.ChangeGun(cookieWeapon[entityB].GunOnDeath);
-                }
+
 
 
             }
