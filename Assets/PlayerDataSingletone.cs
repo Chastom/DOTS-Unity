@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -21,6 +22,11 @@ public class PlayerDataSingletone : MonoBehaviour
     private TextMeshProUGUI AmmoText;
     private string CurrentText;
 
+    public GameObject KillCountText;
+    public GameObject TimeSurvivedText;
+
+    private float ElapsedTime;
+
     void Awake()
     {
         if (instance == null)
@@ -31,12 +37,14 @@ public class PlayerDataSingletone : MonoBehaviour
 
     public void Start()
     {
+        ElapsedTime = 0;
         HealthVignette.SetActive(true);
         AmmoText = AmmoTextGO.GetComponent<TextMeshProUGUI>();
     }
 
     public void FixedUpdate()
     {
+        ElapsedTime += Time.fixedDeltaTime;
         DummyTimer -= Time.fixedDeltaTime;
 
         if (DummyTimer <= 0)
@@ -45,6 +53,9 @@ public class PlayerDataSingletone : MonoBehaviour
             DummyTimer = HealthPointsIncrementTime;
         }
         AmmoText.text = CurrentText;
+
+        KillCountText.GetComponent<TextMeshProUGUI>().text = "Kill count: " + EnemiesKilled;
+        TimeSurvivedText.GetComponent<TextMeshProUGUI>().text = "Time Survived: " + Math.Round(ElapsedTime);
     }
 
     public void AddHealth(float health)

@@ -18,6 +18,7 @@ public class RemoveOnCollisionSystem : JobComponentSystem
             if (healthPoints.Hp < 1)
             {
                 entityCommandBuffer.DestroyEntity(entityInQueryIndex, entity);
+                PlayerDataSingletone.instance.EnemiesKilled += 1;
             }
 
 
