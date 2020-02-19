@@ -78,11 +78,6 @@ public class MachineGun : JobComponentSystem
         {
             ReloadTime -= Time.DeltaTime;
         }
-        //reseting ammo on weapon swap (if ammo is not full)
-        if(GunManager.instance.CurrentGun != Gun.MachineGun && CurrentAmmo != InitialAmmo)
-        {
-            CurrentAmmo = InitialAmmo;
-        }
         return inputDeps;
     }
 
