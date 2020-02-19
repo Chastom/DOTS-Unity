@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,7 @@ public class PlayerDataSingletone : MonoBehaviour
     public int EnemiesKilled = 0;
 
     public GameObject GameOverText;
+    public GameObject AmmoText;
 
     private float DummyTimer;
 
@@ -70,5 +72,10 @@ public class PlayerDataSingletone : MonoBehaviour
     {
         HealthVignette.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1 - HP/100);
         //HealthBar.transform.localScale = new Vector3(1f, -(HP / 100));
+    }
+
+    public void UpdateAmmo(string text)
+    {
+        AmmoText.GetComponent<TextMeshProUGUI>().text = text;
     }
 }

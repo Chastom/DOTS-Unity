@@ -12,6 +12,8 @@ public class Pistol : JobComponentSystem
     {
         if (GunManager.instance.CurrentGun == Gun.Pistol && Input.GetMouseButtonDown(0))
         {
+            UpdateAmmoText();
+
             Vector3 mousePosition = Input.mousePosition;
             Ray ray = GunManager.instance.Camera.ScreenPointToRay(mousePosition);
             float distanceToPlane;
@@ -46,5 +48,10 @@ public class Pistol : JobComponentSystem
 
         }
         return inputDeps;
+    }
+
+    public void UpdateAmmoText()
+    {
+        PlayerDataSingletone.instance.UpdateAmmo("∞");
     }
 }
