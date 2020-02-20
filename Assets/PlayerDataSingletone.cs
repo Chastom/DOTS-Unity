@@ -17,6 +17,10 @@ public class PlayerDataSingletone : MonoBehaviour
     public float HealthPointsIncrementTime = 2;
     public int EnemiesKilled = 0;
 
+    public float difficulty = 1;
+    public float difficultyIncrease = .5f;
+    public float maxDifficulty = 20;
+
     public GameObject GameOverText;
     public GameObject RestartButon;
     public GameObject AmmoTextGO;
@@ -55,6 +59,29 @@ public class PlayerDataSingletone : MonoBehaviour
 
     public void FixedUpdate()
     {
+
+        if (ElapsedTime > 270)
+            difficulty = 20;
+        else if (ElapsedTime > 230)
+            difficulty = 13;
+        else if (ElapsedTime > 200)
+            difficulty = 9;
+        else if (ElapsedTime > 170)
+            difficulty = 6f;
+        else if (ElapsedTime > 140)
+            difficulty = 4f;
+        else if (ElapsedTime > 110)
+            difficulty = 3.3f;
+        else if (ElapsedTime > 80)
+            difficulty = 2.5f;
+        else if (ElapsedTime > 50)
+            difficulty = 2f;
+        else if (ElapsedTime > 25)
+            difficulty = 1.5f;
+        else if (ElapsedTime > 10)
+            difficulty = 1.2f;
+
+
         ElapsedTime += Time.fixedDeltaTime;
         DummyTimer -= Time.fixedDeltaTime;
 
@@ -122,6 +149,9 @@ public class PlayerDataSingletone : MonoBehaviour
         Time.timeScale = timeScale;
         MachineGun.CurrentAmmo = MachineGun.InitialAmmo;
         Shotgun.CurrentAmmo = Shotgun.InitialAmmo;
+
+        difficulty = 1;
+
         SceneManager.LoadScene(0);
     }
 }

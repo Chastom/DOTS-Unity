@@ -99,13 +99,13 @@ MonoBehaviour:
   m_AngularDamping: 0.05
   m_InitialLinearVelocity:
     x: 0
-    y: -5
+    y: -10
     z: 0
   m_InitialAngularVelocity:
     x: 0
     y: 0
     z: 0
-  m_GravityFactor: 10
+  m_GravityFactor: 20
   m_OverrideDefaultMassDistribution: 0
   m_CenterOfMass:
     x: 0
