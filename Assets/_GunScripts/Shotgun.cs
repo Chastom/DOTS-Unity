@@ -12,9 +12,9 @@ public class Shotgun : JobComponentSystem
     private float ReloadTime = 0;
     public static int InitialAmmo = 10;
     public static int CurrentAmmo;
-    private readonly float spreadRatio = 0.25f;
+    private readonly float spreadRatio = 0.2f;
 
-    Random r = new Random();
+    private readonly Random r = new Random();
     protected override void OnCreate()
     {
         CurrentAmmo = InitialAmmo;
