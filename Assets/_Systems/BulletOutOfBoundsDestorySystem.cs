@@ -15,8 +15,14 @@ public class BulletOutOfBoundsDestorySystem : JobComponentSystem
 
         var output = Entities.ForEach((int entityInQueryIndex, ref Entity entity, ref BulletOutOfBoundsDestroy bulletOutOfBoundsDestroy, ref Translation translation) =>
         {
-            if (translation.Value.z > bulletOutOfBoundsDestroy.DestroyOffsetZ)
+            if (translation.Value.z > bulletOutOfBoundsDestroy.DestroyOffsetZ 
+            || translation.Value.z < -40
+            || translation.Value.x > 40
+            || translation.Value.x < -40
+            || translation.Value.y > 40
+            || translation.Value.y < -40)
                 entityCommandBuffer.DestroyEntity(entityInQueryIndex, entity);
+
 
         }).Schedule(inputDeps);
 
