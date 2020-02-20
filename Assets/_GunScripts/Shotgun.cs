@@ -22,7 +22,7 @@ public class Shotgun : JobComponentSystem
 
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
-
+        JobHandle returnDeps = inputDeps;
         if (GunManager.instance.CurrentGun == Gun.Shotgun && Input.GetMouseButtonDown(0) && ReloadTime <= 0)
         {
             Vector3 mousePosition = Input.mousePosition;
@@ -38,26 +38,27 @@ public class Shotgun : JobComponentSystem
                 var moveDirection = (hitPos - GunManager.instance.Camera.transform.position).normalized;
 
                 var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
-                var entityCommandBuffer = ecbSystem.CreateCommandBuffer();
+                var entityCommandBuffer = ecbSystem.CreateCommandBuffer().ToConcurrent();
 
 
                 quaternion bulletRot = quaternion.LookRotation(moveDirection, Vector3.up);
-
-                Entities.WithoutBurst().ForEach((ref BulletPrefabData bulletPrefabData, ref Translation translation) =>
+                var randomNumber = r.NextDouble();
+                float spreadRationTemp = spreadRatio;
+                returnDeps = Entities.WithoutBurst().ForEach((int entityInQueryIndex, ref BulletPrefabData bulletPrefabData, ref Translation translation) =>
                 {
                     for (int x = 0; x < 100; x++)
                     {
-                        var instance = entityCommandBuffer.Instantiate(bulletPrefabData.Entity);
-                        var offset = new Vector3((-0.5f+(float)r.NextDouble()) * spreadRatio, (-0.5f+(float)r.NextDouble())*spreadRatio, 0);
-                        entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos });
-                        entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
+                        var instance = entityCommandBuffer.Instantiate(entityInQueryIndex, bulletPrefabData.Entity);
+                        var offset = new Vector3((-0.5f+(float)randomNumber) * spreadRationTemp, (-0.5f+(float)randomNumber) * spreadRationTemp, 0);
+                        entityCommandBuffer.SetComponent(entityInQueryIndex, instance, new Translation { Value = bulletSpawnPos });
+                        entityCommandBuffer.SetComponent(entityInQueryIndex, instance, new Rotation { Value = bulletRot });
                         //entityCommandBuffer.SetComponent(instance, new HealthPoints { Hp = 9000 });
-                        entityCommandBuffer.AddComponent(instance, new Scale { Value = 0.15f });
-                        entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection+offset, Speed = bulletSpeed });
-                        entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 1 });
+                        entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new Scale { Value = 0.15f });
+                        entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletMove { MoveDirection = moveDirection+offset, Speed = bulletSpeed });
+                        entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletDamage { Damage = 1 });
                     }
 
-                }).Run();
+                }).Schedule(inputDeps);
             }
 
             Debug.DrawLine(GunManager.instance.Camera.transform.position, hitPos, Color.red, 10f, false);
@@ -75,6 +76,6 @@ public class Shotgun : JobComponentSystem
         {
             ReloadTime -= Time.DeltaTime;
         }
-        return inputDeps;
+        return returnDeps;
     }
 }

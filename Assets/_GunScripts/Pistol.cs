@@ -40,7 +40,7 @@ public class Pistol : JobComponentSystem
                     entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos });
                     entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
                     entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
-                    entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 2 });
+                    entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 20 });
 
                 }).Run();
             }
