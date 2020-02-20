@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 public class PlayerDataSingletone : MonoBehaviour
@@ -17,8 +18,8 @@ public class PlayerDataSingletone : MonoBehaviour
     public int EnemiesKilled = 0;
 
     public GameObject GameOverText;
+    public GameObject RestartButon;
     public GameObject AmmoTextGO;
-    public List<float> RandomnessList;
 
     private float DummyTimer;
     private TextMeshProUGUI AmmoText;
@@ -31,9 +32,11 @@ public class PlayerDataSingletone : MonoBehaviour
     private TextMeshProUGUI TimeSurvivedText;
 
     private float ElapsedTime;
+    private float timeScale;
 
     void Awake()
     {
+        timeScale = Time.timeScale;
         if (instance == null)
             instance = this;
         else if (instance != null)
@@ -104,21 +107,21 @@ public class PlayerDataSingletone : MonoBehaviour
             UpdateHealthBar();
             Time.timeScale = 0; // Stop game xd
             GameOverText.SetActive(true);
+            RestartButon.SetActive(true);
         }
     }
 
-
-    private void GenerateRandomness()
-    {
-        Random r = new Random();
-        for (int x = 0; x <= 1000; x++)
-        {
-            RandomnessList.Add(-0.5f+(float)r.NextDouble());
-        }
-    }
     private void UpdateHealthBar()
     {
         HealthVignette.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1 - HP/100);
         //HealthBar.transform.localScale = new Vector3(1f, -(HP / 100));
+    }
+
+    public void Restart()
+    {
+        Time.timeScale = timeScale;
+        MachineGun.CurrentAmmo = MachineGun.InitialAmmo;
+        Shotgun.CurrentAmmo = Shotgun.InitialAmmo;
+        SceneManager.LoadScene(0);
     }
 }
