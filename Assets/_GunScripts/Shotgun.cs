@@ -8,16 +8,28 @@ using UnityEngine;
 using Random = System.Random;
 public class Shotgun : JobComponentSystem
 {
-    private float FireRate = 0.75f;
+    private float FireRate = 0.4f;
     private float ReloadTime = 0;
     public static int InitialAmmo = 10;
     public static int CurrentAmmo;
-    private readonly float spreadRatio = 1f;
+    //private readonly float spreadRatio = 1f;
 
-    private readonly Random r = new Random();
+    public static int Radius = 25;
+    private List<Vector2i> Offsets;
+
     protected override void OnCreate()
     {
         CurrentAmmo = InitialAmmo;
+        Offsets = new List<Vector2i>();
+        int threshold = Radius * Radius;
+        for (int i = -Radius; i < Radius; i++)
+        {
+            for (int j = -Radius; j < Radius; j++)
+            {
+                if (i * i + j * j < threshold)
+                    Offsets.Add(new Vector2i(i, j));
+            }
+        }
     }
 
     protected override JobHandle OnUpdate(JobHandle inputDeps)
@@ -33,35 +45,60 @@ public class Shotgun : JobComponentSystem
             {
                 hitPos = ray.GetPoint(distanceToPlane);
 
-                var bulletSpeed = 25;
                 var bulletSpawnPos = GunManager.instance.Camera.transform.position;
-                bulletSpawnPos.y -= 0.33f;
-                var moveDirection = (hitPos - GunManager.instance.Camera.transform.position).normalized;
+                bulletSpawnPos.y -= 1f;
+                var moveDirection = (hitPos - bulletSpawnPos).normalized;
 
                 var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
-                var entityCommandBuffer = ecbSystem.CreateCommandBuffer().ToConcurrent();
+                var entityCommandBuffer = ecbSystem.CreateCommandBuffer();
 
 
-                quaternion bulletRot = quaternion.LookRotation(moveDirection, Vector3.up);
-                float randomNumber = 0.5f - (float)r.NextDouble();
-                float spreadRatioTemp = spreadRatio;
-                returnDeps = Entities.WithoutBurst().ForEach((int entityInQueryIndex, ref BulletPrefabData bulletPrefabData, ref Translation translation) =>
+                quaternion bulletRot;
+
+                Random r = new Random();
+
+                Entities.WithoutBurst().ForEach((ref BulletPrefabData bulletPrefabData, ref Translation translation) =>
                 {
-                    for (int x = -5; x < 5; x++)
+                    float3 temp;
+                    float3 temp2;
+                    for (int i = 0; i < Offsets.Count; i++)
                     {
-                        for (int y = -5; y < 5; y++)
-                        {
-                            var instance = entityCommandBuffer.Instantiate(entityInQueryIndex, bulletPrefabData.Entity);
-                            var offset = new Vector3(spreadRatioTemp * x / -5.0f, spreadRatioTemp * y / 5.0f, 0);
-                            entityCommandBuffer.SetComponent(entityInQueryIndex, instance, new Translation { Value = bulletSpawnPos+offset });
-                            entityCommandBuffer.SetComponent(entityInQueryIndex, instance, new Rotation { Value = bulletRot });
-                            entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new Scale { Value = 0.2f });
-                            entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
-                            entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletDamage { Damage = 1 });
-                        }
-                    }
+                        var randomSpawn = (float)r.NextDouble();
+                        if (randomSpawn <= 0.95f)
+                            continue;
 
-                }).Schedule(inputDeps);
+                        var offsetStr = 5;
+
+                        temp = moveDirection;
+                        temp.x += Offsets[i].x / 85;
+                        temp.y += Offsets[i].y / 85;
+
+                        bulletRot = quaternion.LookRotation(temp, Vector3.up);
+
+                        //temp = hitPos;
+                        //temp2 = hitPos;
+                        //temp2.z += 10;
+                        //temp.x += Offsets[i].x / 30;
+                        //temp.y += Offsets[i].y / 30;
+                        //var dir = temp2 - new float3(0, 0, -1) - temp;
+
+                        //var randomOffset = new float3((0.5f - (float)r.NextDouble()) * offsetStr, (0.5f - (float)r.NextDouble()) * offsetStr, ((float)r.NextDouble()) * offsetStr);
+
+                        var s = 0.2f;
+                        float4x4 newScale = new float4x4(
+                            s, 0, 0, 0, 
+                            0, s, 0, 0, 
+                            0, 0, s, 0, 
+                            0, 0, 0, 1);
+                        var instance = entityCommandBuffer.Instantiate(bulletPrefabData.Entity);
+                        entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos });
+                        entityCommandBuffer.AddComponent(instance, new CompositeScale { Value = newScale });
+                        entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = temp, Speed = 30f });
+                        entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
+                        entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 5 });
+                    }                    
+
+                }).Run();
             }
 
             Debug.DrawLine(GunManager.instance.Camera.transform.position, hitPos, Color.red, 10f, false);
@@ -82,4 +119,14 @@ public class Shotgun : JobComponentSystem
         return returnDeps;
     }
 
+
+    public struct Vector2i
+    {
+        public float x;
+        public float y;
+        public Vector2i(float aX, float aY)
+        {
+            x = aX; y = aY;
+        }
+    }
 }

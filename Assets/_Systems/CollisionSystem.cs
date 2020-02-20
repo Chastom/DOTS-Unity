@@ -15,6 +15,7 @@ public class CollisionSystem : JobComponentSystem
         public ComponentDataFromEntity<HealthPoints> collisionData;
         public ComponentDataFromEntity<BulletTag> bullet;
         public ComponentDataFromEntity<BulletDamage> dmg;
+        public ComponentDataFromEntity<CookieChangeWeapon> cookieChangeWeapon;        
         public PhysicsWorld World;
 
         public void Execute(CollisionEvent collisionEvent)
@@ -36,15 +37,31 @@ public class CollisionSystem : JobComponentSystem
                     //checking which entity is a bullet
                     if (bullet.HasComponent(entityA))
                     {
-                        bulletDamage = dmg[entityA];
+                        bulletDamage = dmg[entityA];                        
                     }
                     else if (bullet.HasComponent(entityB))
                     {
                         bulletDamage = dmg[entityB];
                     }
-                    float3 contactPoint = collisionEvent.CalculateDetails(ref World).AverageContactPointPosition;
-                    OnHitParticleSystem.ShouldSpawn = true;
-                    OnHitParticleSystem.Position = contactPoint;
+                    if (cookieChangeWeapon.HasComponent(entityA))
+                    {
+                        if (!cookieChangeWeapon[entityA].ReceiveGun)
+                        {
+                            float3 contactPoint = collisionEvent.CalculateDetails(ref World).AverageContactPointPosition;
+                            OnHitParticleSystem.ShouldSpawn = true;
+                            OnHitParticleSystem.Position = contactPoint;
+                        }
+                        
+                    }
+                    if (cookieChangeWeapon.HasComponent(entityB))
+                    {
+                        if (!cookieChangeWeapon[entityB].ReceiveGun)
+                        {
+                            float3 contactPoint = collisionEvent.CalculateDetails(ref World).AverageContactPointPosition;
+                            OnHitParticleSystem.ShouldSpawn = true;
+                            OnHitParticleSystem.Position = contactPoint;
+                        }
+                    }
                 }
 
                 HealthPoints coll1 = collisionData[entityA];
@@ -76,7 +93,8 @@ public class CollisionSystem : JobComponentSystem
             World = buildPhysicsWorld.PhysicsWorld,
             collisionData = GetComponentDataFromEntity<HealthPoints>(),
             bullet = GetComponentDataFromEntity<BulletTag>(),
-            dmg = GetComponentDataFromEntity<BulletDamage>()
+            dmg = GetComponentDataFromEntity<BulletDamage>(),
+            cookieChangeWeapon = GetComponentDataFromEntity<CookieChangeWeapon>()
         };
 
         var output = triggerJob.Schedule(stepPhysicsWorld.Simulation, ref buildPhysicsWorld.PhysicsWorld, inputDeps);
