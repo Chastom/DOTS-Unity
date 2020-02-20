@@ -12,7 +12,7 @@ public class Shotgun : JobComponentSystem
     private float ReloadTime = 0;
     public static int InitialAmmo = 10;
     public static int CurrentAmmo;
-    private readonly float spreadRatio = 2.5f;
+    private readonly float spreadRatio = 0.25f;
 
     Random r = new Random();
     protected override void OnCreate()
@@ -33,7 +33,7 @@ public class Shotgun : JobComponentSystem
             {
                 hitPos = ray.GetPoint(distanceToPlane);
 
-                var bulletSpeed = 30;
+                var bulletSpeed = 25;
                 var bulletSpawnPos = GunManager.instance.Camera.transform.position;
                 var moveDirection = (hitPos - GunManager.instance.Camera.transform.position).normalized;
 
@@ -48,12 +48,12 @@ public class Shotgun : JobComponentSystem
                     for (int x = 0; x < 100; x++)
                     {
                         var instance = entityCommandBuffer.Instantiate(bulletPrefabData.Entity);
-                        var offset = new Vector3((float)r.NextDouble() * spreadRatio, (float)r.NextDouble()*spreadRatio, (float)r.NextDouble()* spreadRatio);
-                        entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos+offset });
+                        var offset = new Vector3((-0.5f+(float)r.NextDouble()) * spreadRatio, (-0.5f+(float)r.NextDouble())*spreadRatio, 0);
+                        entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos });
                         entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
                         //entityCommandBuffer.SetComponent(instance, new HealthPoints { Hp = 9000 });
-                        entityCommandBuffer.AddComponent(instance, new Scale { Value = 0.2f });
-                        entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
+                        entityCommandBuffer.AddComponent(instance, new Scale { Value = 0.15f });
+                        entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection+offset, Speed = bulletSpeed });
                         entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 1 });
                     }
 
