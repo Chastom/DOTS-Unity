@@ -8,10 +8,10 @@ using UnityEngine;
 
 public class MachineGun : JobComponentSystem
 {
-    private float FireRate = 0.1f;
+    private float FireRate = 0.07f;
     private float ReloadTime = 0;
     private bool IsShooting = false;
-    public static int InitialAmmo = 50;
+    public static int InitialAmmo = 75;
     public static int CurrentAmmo;
 
     protected override void OnCreate()
@@ -40,9 +40,10 @@ public class MachineGun : JobComponentSystem
             {
                 hitPos = ray.GetPoint(distanceToPlane);
 
-                var bulletSpeed = 30;
+                var bulletSpeed = 60;
                 var bulletSpawnPos = GunManager.instance.Camera.transform.position;
-                var moveDirection = (hitPos - GunManager.instance.Camera.transform.position).normalized;
+                bulletSpawnPos.y -= 1f;
+                var moveDirection = (hitPos - bulletSpawnPos).normalized;
 
                 var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
                 var entityCommandBuffer = ecbSystem.CreateCommandBuffer();
@@ -57,7 +58,7 @@ public class MachineGun : JobComponentSystem
                     entityCommandBuffer.SetComponent(instance, new Translation { Value = bulletSpawnPos });
                     entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
                     entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
-                    entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 1 });
+                    entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 10 });
 
                 }).Run();
             }

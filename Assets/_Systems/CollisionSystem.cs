@@ -15,31 +15,37 @@ public class CollisionSystem : JobComponentSystem
         public ComponentDataFromEntity<HealthPoints> collisionData;
         public ComponentDataFromEntity<BulletTag> bullet;
         public ComponentDataFromEntity<BulletDamage> dmg;
+        public PhysicsWorld World;
 
-        public void Execute(CollisionEvent triggerEvent)
+        public void Execute(CollisionEvent collisionEvent)
         {
-            Entity entityA = triggerEvent.Entities.EntityA;
-            Entity entityB = triggerEvent.Entities.EntityB;
+            Entity entityA = collisionEvent.Entities.EntityA;
+            Entity entityB = collisionEvent.Entities.EntityB;
 
             BulletDamage bulletDamage = new BulletDamage { Damage = 0};
 
             if (bullet.HasComponent(entityA) || bullet.HasComponent(entityB))
             {
-                //checking which entity is a bullet
-                if (bullet.HasComponent(entityA))
-                {
-                    bulletDamage = dmg[entityA];
-                }
-                else if (bullet.HasComponent(entityB))
-                {
-                    bulletDamage = dmg[entityB];
-                }
                 // two bullets collided, we don't do any damage to them.
                 if (bullet.HasComponent(entityA) && bullet.HasComponent(entityB))
-                {                    
+                {
                     bulletDamage.Damage = 0;
                 }
-
+                else
+                {
+                    //checking which entity is a bullet
+                    if (bullet.HasComponent(entityA))
+                    {
+                        bulletDamage = dmg[entityA];
+                    }
+                    else if (bullet.HasComponent(entityB))
+                    {
+                        bulletDamage = dmg[entityB];
+                    }
+                    float3 contactPoint = collisionEvent.CalculateDetails(ref World).AverageContactPointPosition;
+                    OnHitParticleSystem.ShouldSpawn = true;
+                    OnHitParticleSystem.Translation = contactPoint;
+                }
 
                 HealthPoints coll1 = collisionData[entityA];
                 HealthPoints coll2 = collisionData[entityB];
@@ -67,6 +73,7 @@ public class CollisionSystem : JobComponentSystem
     {
         CollisionJob triggerJob = new CollisionJob
         {
+            World = buildPhysicsWorld.PhysicsWorld,
             collisionData = GetComponentDataFromEntity<HealthPoints>(),
             bullet = GetComponentDataFromEntity<BulletTag>(),
             dmg = GetComponentDataFromEntity<BulletDamage>()

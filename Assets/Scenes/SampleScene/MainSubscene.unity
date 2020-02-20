@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 1953361680}
   - component: {fileID: 1953361679}
   - component: {fileID: 1953361681}
+  - component: {fileID: 1953361682}
   m_Layer: 0
   m_Name: MainSubscene
   m_TagString: Untagged
@@ -191,4 +192,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 7843571067448338692, guid: fa2a492b7f38fbf4a9f68f87e69a4e91,
+    type: 3}
+--- !u!114 &1953361682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1953361678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6272e283940943d47a1ee93f09bbfcc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParticlePrefab: {fileID: 7200511024387765402, guid: a545107c1af211048b06156f29aed9bd,
     type: 3}
