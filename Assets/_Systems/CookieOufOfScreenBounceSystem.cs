@@ -19,10 +19,10 @@ public class CookieOutOfScreenBounceSystem : JobComponentSystem
         var output = Entities.ForEach((ref CookieTag cookieTag, ref Translation translation, ref PhysicsVelocity physicsVelocity) =>
         {
             // Bounce on X axis
-            if (translation.Value.x > 10)
+            if (translation.Value.x > 15)
                 physicsVelocity.Linear = new float3(-3, physicsVelocity.Linear.y, physicsVelocity.Linear.z);
 
-            if (translation.Value.x < -10)
+            if (translation.Value.x < -15)
                 physicsVelocity.Linear = new float3(3, physicsVelocity.Linear.y, physicsVelocity.Linear.z);
 
             // Bounce on Y axis
@@ -30,11 +30,11 @@ public class CookieOutOfScreenBounceSystem : JobComponentSystem
                 physicsVelocity.Linear = new float3(physicsVelocity.Linear.x, -15, physicsVelocity.Linear.z);
 
             // Bounce on Z axis
-            if (translation.Value.z > 5)
-                physicsVelocity.Linear = new float3(physicsVelocity.Linear.x, physicsVelocity.Linear.y, -2);
+            if (translation.Value.z > 1)
+                physicsVelocity.Linear = new float3(physicsVelocity.Linear.x, physicsVelocity.Linear.y, 0);
 
-            if (translation.Value.z < -5)
-                physicsVelocity.Linear = new float3(physicsVelocity.Linear.x, physicsVelocity.Linear.y, 2);
+            //if (translation.Value.z < -50)
+            //    physicsVelocity.Linear = new float3(physicsVelocity.Linear.x, physicsVelocity.Linear.y, 0);
 
             //translation.Value += bulletMove.MoveDirection * bulletMove.Speed * deltaTime;
         }).Schedule(inputDeps);
