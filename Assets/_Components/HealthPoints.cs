@@ -7,5 +7,6 @@ using UnityEngine;
 [GenerateAuthoringComponent]
 public struct HealthPoints : IComponentData
 {
+    public bool DeleteOnLowHp;
     public int Hp;
 }

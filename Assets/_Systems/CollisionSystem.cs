@@ -50,8 +50,8 @@ public class CollisionSystem : JobComponentSystem
                 HealthPoints coll1 = collisionData[entityA];
                 HealthPoints coll2 = collisionData[entityB];
 
-                coll1 = new HealthPoints { Hp = coll1.Hp - bulletDamage.Damage };
-                coll2 = new HealthPoints { Hp = coll2.Hp - bulletDamage.Damage };
+                coll1 = new HealthPoints { Hp = coll1.Hp - bulletDamage.Damage, DeleteOnLowHp = coll1.DeleteOnLowHp};
+                coll2 = new HealthPoints { Hp = coll2.Hp - bulletDamage.Damage, DeleteOnLowHp = coll2.DeleteOnLowHp };
 
                 collisionData[entityA] = coll1;
                 collisionData[entityB] = coll2;                
