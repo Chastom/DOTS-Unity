@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5746624727817248404}
   - component: {fileID: 2246959088509899187}
   - component: {fileID: -1762050934764128485}
+  - component: {fileID: 6258473970210207540}
   m_Layer: 0
   m_Name: CookieBossTree
   m_TagString: Untagged
@@ -246,3 +247,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ReceiveGun: 0
   GunOnDeath: 0
+--- !u!114 &6258473970210207540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6405411197115529760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822b5db0497973b42b0ea471799627d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DropSpeed: 5
+  SideToSideSpeed: 10
+  IsMovingRight: 0

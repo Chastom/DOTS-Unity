@@ -157,8 +157,13 @@ MonoBehaviour:
   - {fileID: 6405411197115529760, guid: 5a0df78835136f7429523748eaac1df3, type: 3}
   - {fileID: 6405411197115529760, guid: 6ed9c3f4c6ec84c49b7c518b178b7ef0, type: 3}
   - {fileID: 6405411197115529760, guid: 139965688b661364b8279f73363fb733, type: 3}
+  BossPrefab: {fileID: 6405411197115529760, guid: 8d754f48e21f2f748b88c8f718280e7b,
+    type: 3}
   SpawnTime: 0.5
   SpawnPosY: 13
+  WaveDuration: 3
+  WaveFrequency: 7
+  BossSpawnFrequency: 1
 --- !u!4 &1953361680
 Transform:
   m_ObjectHideFlags: 0

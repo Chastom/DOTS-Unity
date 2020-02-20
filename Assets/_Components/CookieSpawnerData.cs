@@ -14,11 +14,19 @@ public struct CookieSpawnerData : IComponentData
 
     public Entity cookieBoss;
 
-    public bool IsBoosActive;
+    public bool IsBossActive;
     public float BossSpawnFrequency;
-    public float BossNextSpawnTime;
+    public float BossNextSpawnTimer;
 
     public float CurrentSpawnTimer;
     public float SpawnTime;
     public float SpawnPosY;
+
+    
+    public bool WaveSpawnActive;
+    public float WaveFrequency;
+    public float WaveTimer;
+    public float WaveDuration;
+
+
 }
