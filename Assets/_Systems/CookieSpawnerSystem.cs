@@ -16,6 +16,7 @@ public class CookieSpawnerSystem : JobComponentSystem
         var randomPosRatio = r.NextDouble();
         var randomCookieIndex = r.Next(5);
 
+
         bool testIsInputPressed = Input.GetKeyDown(KeyCode.Space);
 
         var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
@@ -72,29 +73,63 @@ public class CookieSpawnerSystem : JobComponentSystem
             }
 
 
-
             // Spawn logic
-            if (cookieSpawner.CurrentSpawnTimer <= 0 && cookieSpawner.WaveSpawnActive && !cookieSpawner.IsBossActive)
+            if (!cookieSpawner.IsBossActive)    // Boss no
             {
-                Entity instance = new Entity();
-
-                switch (randomCookieIndex)
+                if (cookieSpawner.CurrentSpawnTimer <= 0 && cookieSpawner.WaveSpawnActive)
                 {
-                    case 0: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); break;
-                    case 1: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFat); break;
-                    case 2: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFast); break;
-                    case 3: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieMashineGun); break;
-                    case 4: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieShotgun); break;
+                    Entity instance = new Entity();
 
-                    default: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); Debug.Log("Bad!@!@!@!@ Wrong cookie index"); break;
+                    switch (randomCookieIndex)
+                    {
+                        case 0: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); break;
+                        case 1: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFat); break;
+                        case 2: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFast); break;
+                        case 3: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieMashineGun); break;
+                        case 4: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieShotgun); break;
 
+                        default: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); Debug.Log("Bad!@!@!@!@ Wrong cookie index"); break;
+
+                    }
+
+                    var position = new float3(10 - (float)randomPosRatio * 20, cookieSpawner.SpawnPosY, 5);
+                    entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
+
+                    var theDifficulty = PlayerDataSingletone.instance.maxDifficulty / PlayerDataSingletone.instance.difficulty;
+                    cookieSpawner.CurrentSpawnTimer = cookieSpawner.SpawnTime * theDifficulty * 0.05f;
+                }
+            }
+            else    // Boss yes
+            {
+                if (cookieSpawner.CurrentSpawnTimer <= 0)
+                {
+          
+                    for (int i = -3; i <= 3; i++)
+                    {
+                        Entity instance;
+
+                        switch (randomCookieIndex)
+                        {
+                            case 0: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); break;
+                            case 1: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFat); break;
+                            case 2: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFast); break;
+                            case 3: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieMashineGun); break;
+                            case 4: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieShotgun); break;
+
+                            default: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); Debug.Log("Bad!@!@!@!@ Wrong cookie index"); break;
+
+                        }
+
+                        var position = new float3(i * 4, cookieSpawner.SpawnPosY, 5);
+                        entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
+                    }
+
+                    var theDifficulty = PlayerDataSingletone.instance.maxDifficulty / PlayerDataSingletone.instance.difficulty;
+                    cookieSpawner.CurrentSpawnTimer = cookieSpawner.SpawnTime * theDifficulty * .5f;
                 }
 
-                var position = new float3(10 - (float)randomPosRatio * 20, cookieSpawner.SpawnPosY, 5);
-                entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
-
-                cookieSpawner.CurrentSpawnTimer = cookieSpawner.SpawnTime;
             }
+           
 
            
 
