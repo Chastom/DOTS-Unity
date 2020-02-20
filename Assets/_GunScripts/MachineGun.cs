@@ -8,10 +8,10 @@ using UnityEngine;
 
 public class MachineGun : JobComponentSystem
 {
-    private float FireRate = 0.1f;
+    private float FireRate = 0.07f;
     private float ReloadTime = 0;
     private bool IsShooting = false;
-    public static int InitialAmmo = 50;
+    public static int InitialAmmo = 75;
     public static int CurrentAmmo;
 
     protected override void OnCreate()
@@ -40,7 +40,7 @@ public class MachineGun : JobComponentSystem
             {
                 hitPos = ray.GetPoint(distanceToPlane);
 
-                var bulletSpeed = 40;
+                var bulletSpeed = 60;
                 var bulletSpawnPos = GunManager.instance.Camera.transform.position;
                 bulletSpawnPos.y -= 1f;
                 var moveDirection = (hitPos - bulletSpawnPos).normalized;
