@@ -15,7 +15,7 @@ public class CookieDestroyOnCollisionSystem : JobComponentSystem
 
         var forEachHandler = Entities.WithAll<CookieTag>().ForEach((int entityInQueryIndex, Entity entity, ref HealthPoints healthPoints, ref CookieChangeWeapon changeWeapon) =>
         {
-            if (healthPoints.Hp < 1)
+            if (healthPoints.Hp < 1 && healthPoints.DeleteOnLowHp)
             {
                 entityCommandBuffer.DestroyEntity(entityInQueryIndex, entity);
                 PlayerDataSingletone.instance.EnemiesKilled += 1;

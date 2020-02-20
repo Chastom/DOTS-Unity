@@ -164,7 +164,7 @@ MonoBehaviour:
   SpawnPosY: 13
   WaveDuration: 3
   WaveFrequency: 7
-  BossSpawnFrequency: 1
+  BossSpawnFrequency: 10
 --- !u!4 &1953361680
 Transform:
   m_ObjectHideFlags: 0
