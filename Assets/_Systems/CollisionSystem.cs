@@ -44,7 +44,7 @@ public class CollisionSystem : JobComponentSystem
                     }
                     float3 contactPoint = collisionEvent.CalculateDetails(ref World).AverageContactPointPosition;
                     OnHitParticleSystem.ShouldSpawn = true;
-                    OnHitParticleSystem.Translation = contactPoint;
+                    OnHitParticleSystem.Position = contactPoint;
                 }
 
                 HealthPoints coll1 = collisionData[entityA];
