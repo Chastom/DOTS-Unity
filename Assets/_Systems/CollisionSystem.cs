@@ -21,7 +21,7 @@ public class CollisionSystem : JobComponentSystem
             Entity entityA = triggerEvent.Entities.EntityA;
             Entity entityB = triggerEvent.Entities.EntityB;
 
-            BulletDamage bulletDamage;
+            BulletDamage bulletDamage = new BulletDamage { Damage = 0};
 
             if (bullet.HasComponent(entityA) || bullet.HasComponent(entityB))
             {
@@ -30,9 +30,14 @@ public class CollisionSystem : JobComponentSystem
                 {
                     bulletDamage = dmg[entityA];
                 }
-                else
+                else if (bullet.HasComponent(entityB))
                 {
                     bulletDamage = dmg[entityB];
+                }
+                // two bullets collided, we don't do any damage to them.
+                if (bullet.HasComponent(entityA) && bullet.HasComponent(entityB))
+                {                    
+                    bulletDamage.Damage = 0;
                 }
 
 
