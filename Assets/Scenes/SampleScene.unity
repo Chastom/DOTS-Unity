@@ -1816,8 +1816,8 @@ MonoBehaviour:
   EnemiesKilled: 0
   GameOverText: {fileID: 293259381032905373}
   AmmoTextGO: {fileID: 921368260}
-  KillCountText: {fileID: 453291311}
-  TimeSurvivedText: {fileID: 1447935359}
+  KillCountGO: {fileID: 453291311}
+  TimeSurvivedGO: {fileID: 1447935359}
 --- !u!1 &5961470295876798235
 GameObject:
   m_ObjectHideFlags: 0

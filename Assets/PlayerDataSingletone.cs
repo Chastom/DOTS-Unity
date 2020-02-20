@@ -22,8 +22,11 @@ public class PlayerDataSingletone : MonoBehaviour
     private TextMeshProUGUI AmmoText;
     private string CurrentText;
 
-    public GameObject KillCountText;
-    public GameObject TimeSurvivedText;
+    public GameObject KillCountGO;
+    public GameObject TimeSurvivedGO;
+
+    private TextMeshProUGUI KillCountText;
+    private TextMeshProUGUI TimeSurvivedText;
 
     private float ElapsedTime;
 
@@ -40,6 +43,8 @@ public class PlayerDataSingletone : MonoBehaviour
         ElapsedTime = 0;
         HealthVignette.SetActive(true);
         AmmoText = AmmoTextGO.GetComponent<TextMeshProUGUI>();
+        KillCountText = KillCountGO.GetComponent<TextMeshProUGUI>();
+        TimeSurvivedText = TimeSurvivedGO.GetComponent<TextMeshProUGUI>();
     }
 
     public void FixedUpdate()
@@ -54,8 +59,8 @@ public class PlayerDataSingletone : MonoBehaviour
         }
         AmmoText.text = CurrentText;
 
-        KillCountText.GetComponent<TextMeshProUGUI>().text = "Kill count: " + EnemiesKilled;
-        TimeSurvivedText.GetComponent<TextMeshProUGUI>().text = "Time Survived: " + Math.Round(ElapsedTime);
+        KillCountText.text = "Kill count: " + EnemiesKilled;
+        TimeSurvivedText.text = "Time Survived: " + Math.Round(ElapsedTime);
     }
 
     public void AddHealth(float health)

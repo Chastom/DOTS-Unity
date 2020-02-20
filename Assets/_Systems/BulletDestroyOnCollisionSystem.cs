@@ -6,19 +6,18 @@ using Unity.Mathematics;
 using Unity.Physics;
 using UnityEngine;
 
-public class RemoveOnCollisionSystem : JobComponentSystem
+public class BulletDestroyOnCollisionSystem : JobComponentSystem
 {
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         var ecbSystem = World.GetExistingSystem<EndSimulationEntityCommandBufferSystem>();
         var entityCommandBuffer = ecbSystem.CreateCommandBuffer().ToConcurrent();
 
-        var forEachHandler = Entities.ForEach((int entityInQueryIndex, Entity entity, ref HealthPoints healthPoints) =>
+        var forEachHandler = Entities.WithAll<BulletTag>().ForEach((int entityInQueryIndex, Entity entity, ref HealthPoints healthPoints) =>
         {
             if (healthPoints.Hp < 1)
             {
                 entityCommandBuffer.DestroyEntity(entityInQueryIndex, entity);
-                PlayerDataSingletone.instance.EnemiesKilled += 1;
             }
 
 
