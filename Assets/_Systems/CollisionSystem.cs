@@ -14,8 +14,6 @@ public class CollisionSystem : JobComponentSystem
     {
         public ComponentDataFromEntity<HealthPoints> collisionData;
         public ComponentDataFromEntity<BulletTag> bullet;
-        public ComponentDataFromEntity<CookieChangeWeapon> cookieWeapon;
-
         public ComponentDataFromEntity<BulletDamage> dmg;
 
         public void Execute(CollisionEvent triggerEvent)
@@ -24,8 +22,6 @@ public class CollisionSystem : JobComponentSystem
             Entity entityB = triggerEvent.Entities.EntityB;
 
             BulletDamage bulletDamage;
-            CookieChangeWeapon cookieChangeWeapon;
-
 
             if (bullet.HasComponent(entityA) || bullet.HasComponent(entityB))
             {
@@ -33,13 +29,10 @@ public class CollisionSystem : JobComponentSystem
                 if (bullet.HasComponent(entityA))
                 {
                     bulletDamage = dmg[entityA];
-                    cookieChangeWeapon = cookieWeapon[entityB];
                 }
                 else
                 {
                     bulletDamage = dmg[entityB];
-                    cookieChangeWeapon = cookieWeapon[entityA];
-
                 }
 
 
@@ -48,27 +41,9 @@ public class CollisionSystem : JobComponentSystem
 
                 coll1 = new HealthPoints { Hp = coll1.Hp - bulletDamage.Damage };
                 coll2 = new HealthPoints { Hp = coll2.Hp - bulletDamage.Damage };
-                //Debug.Log("Object 1 -> " + coll1.HealthPoints + " | Object 2 -> " + coll2.HealthPoints);
 
                 collisionData[entityA] = coll1;
-                collisionData[entityB] = coll2;
-
-                if (cookieChangeWeapon.ReceiveGun)
-                {
-                    //it already has the same gun, so we need to reset its ammo
-                    Gun gun = GunManager.instance.CurrentGun;
-                    switch (gun)
-                    {
-                        case Gun.MachineGun:
-                            MachineGun.CurrentAmmo = MachineGun.InitialAmmo;
-                            PlayerDataSingletone.instance.UpdateAmmo(MachineGun.CurrentAmmo + "/" + MachineGun.InitialAmmo);
-                            break;
-                        default:
-                            break;
-                    }
-
-                    GunManager.instance.ChangeGun(cookieChangeWeapon.GunOnDeath);
-                }
+                collisionData[entityB] = coll2;                
             }
         }
     }
@@ -89,7 +64,6 @@ public class CollisionSystem : JobComponentSystem
         {
             collisionData = GetComponentDataFromEntity<HealthPoints>(),
             bullet = GetComponentDataFromEntity<BulletTag>(),
-            cookieWeapon = GetComponentDataFromEntity<CookieChangeWeapon>(),
             dmg = GetComponentDataFromEntity<BulletDamage>()
         };
 
