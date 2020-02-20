@@ -12,7 +12,7 @@ public class Shotgun : JobComponentSystem
     private float ReloadTime = 0;
     public static int InitialAmmo = 10;
     public static int CurrentAmmo;
-    private readonly float spreadRatio = 0.05f;
+    private readonly float spreadRatio = 1f;
 
     private readonly Random r = new Random();
     protected override void OnCreate()
@@ -35,6 +35,7 @@ public class Shotgun : JobComponentSystem
 
                 var bulletSpeed = 25;
                 var bulletSpawnPos = GunManager.instance.Camera.transform.position;
+                bulletSpawnPos.y -= 0.33f;
                 var moveDirection = (hitPos - GunManager.instance.Camera.transform.position).normalized;
 
                 var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
@@ -54,8 +55,8 @@ public class Shotgun : JobComponentSystem
                             var offset = new Vector3(spreadRatioTemp * x / -5.0f, spreadRatioTemp * y / 5.0f, 0);
                             entityCommandBuffer.SetComponent(entityInQueryIndex, instance, new Translation { Value = bulletSpawnPos+offset });
                             entityCommandBuffer.SetComponent(entityInQueryIndex, instance, new Rotation { Value = bulletRot });
-                            entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new Scale { Value = 0.15f });
-                            entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletMove { MoveDirection = moveDirection + offset, Speed = bulletSpeed });
+                            entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new Scale { Value = 0.2f });
+                            entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletMove { MoveDirection = moveDirection, Speed = bulletSpeed });
                             entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletDamage { Damage = 1 });
                         }
                     }
