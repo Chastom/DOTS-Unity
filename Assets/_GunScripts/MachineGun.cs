@@ -66,7 +66,6 @@ public class MachineGun : JobComponentSystem
             //after successful shot, we reset the reload time and remove ammo
             ReloadTime = FireRate;
             CurrentAmmo--;
-            PlayerDataSingletone.instance.UpdateAmmo(CurrentAmmo + "/" + InitialAmmo); //Updates Ammo Text
             //if out of ammo, we reset the gun back to pistol, and reload ammo
             if (CurrentAmmo == 0)
             {

@@ -23,18 +23,18 @@ public class CookieDestroyOnCollisionSystem : JobComponentSystem
                 //if it's a weapon cookie, we change the current gun
                 if (changeWeapon.ReceiveGun)
                 {
-                    ////it already has the same gun, so we need to reset its ammo
-                    //Gun gun = GunManager.instance.CurrentGun;
-                    //switch (gun)
-                    //{
-                    //    case Gun.MachineGun:
-                    //        MachineGun.CurrentAmmo = MachineGun.InitialAmmo;
-                    //        PlayerDataSingletone.instance.UpdateAmmo(MachineGun.CurrentAmmo + "/" + MachineGun.InitialAmmo);
-                    //        break;
-                    //    default:
-                    //        break;
-                    //}
-
+                    switch (GunManager.instance.CurrentGun)
+                    {
+                        case Gun.MachineGun:
+                            MachineGun.CurrentAmmo = MachineGun.InitialAmmo;
+                            break;
+                        case Gun.Shotgun:
+                            Shotgun.CurrentAmmo = Shotgun.InitialAmmo;
+                            break;
+                        default:
+                            Debug.Log("Picked non existing gun on collision...");
+                            break;
+                    }
                     GunManager.instance.ChangeGun(changeWeapon.GunOnDeath);
                 }
             }

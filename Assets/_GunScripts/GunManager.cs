@@ -27,20 +27,6 @@ public class GunManager : MonoBehaviour
     public void ChangeGun(Gun newGun)
     {
         CurrentGun = newGun;
-
-        switch (newGun)
-        {
-            case Gun.Pistol:
-                PlayerDataSingletone.instance.UpdateAmmo("∞");
-                break;
-            case Gun.MachineGun:
-                MachineGun.CurrentAmmo = MachineGun.InitialAmmo;
-                PlayerDataSingletone.instance.UpdateAmmo(MachineGun.CurrentAmmo + "/" + MachineGun.InitialAmmo);
-                break;
-            default:
-                Debug.Log("What have you picked up?!");
-                break;
-        }
     }
     
 }
