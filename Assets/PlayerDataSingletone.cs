@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = System.Random;
 
 public class PlayerDataSingletone : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class PlayerDataSingletone : MonoBehaviour
     public int EnemiesKilled = 0;
 
     public GameObject GameOverText;
-    public GameObject AmmoTextGO;    
+    public GameObject AmmoTextGO;
+    public List<float> RandomnessList;
 
     private float DummyTimer;
     private TextMeshProUGUI AmmoText;
@@ -40,6 +42,7 @@ public class PlayerDataSingletone : MonoBehaviour
 
     public void Start()
     {
+
         ElapsedTime = 0;
         HealthVignette.SetActive(true);
         AmmoText = AmmoTextGO.GetComponent<TextMeshProUGUI>();
@@ -104,6 +107,15 @@ public class PlayerDataSingletone : MonoBehaviour
         }
     }
 
+
+    private void GenerateRandomness()
+    {
+        Random r = new Random();
+        for (int x = 0; x <= 1000; x++)
+        {
+            RandomnessList.Add(-0.5f+(float)r.NextDouble());
+        }
+    }
     private void UpdateHealthBar()
     {
         HealthVignette.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1 - HP/100);

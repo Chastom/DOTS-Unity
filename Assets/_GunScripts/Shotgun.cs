@@ -12,7 +12,7 @@ public class Shotgun : JobComponentSystem
     private float ReloadTime = 0;
     public static int InitialAmmo = 10;
     public static int CurrentAmmo;
-    private readonly float spreadRatio = 0.2f;
+    private readonly float spreadRatio = 0.05f;
 
     private readonly Random r = new Random();
     protected override void OnCreate()
@@ -42,20 +42,22 @@ public class Shotgun : JobComponentSystem
 
 
                 quaternion bulletRot = quaternion.LookRotation(moveDirection, Vector3.up);
-                var randomNumber = r.NextDouble();
-                float spreadRationTemp = spreadRatio;
+                float randomNumber = 0.5f - (float)r.NextDouble();
+                float spreadRatioTemp = spreadRatio;
                 returnDeps = Entities.WithoutBurst().ForEach((int entityInQueryIndex, ref BulletPrefabData bulletPrefabData, ref Translation translation) =>
                 {
-                    for (int x = 0; x < 100; x++)
+                    for (int x = -5; x < 5; x++)
                     {
-                        var instance = entityCommandBuffer.Instantiate(entityInQueryIndex, bulletPrefabData.Entity);
-                        var offset = new Vector3((-0.5f+(float)randomNumber) * spreadRationTemp, (-0.5f+(float)randomNumber) * spreadRationTemp, 0);
-                        entityCommandBuffer.SetComponent(entityInQueryIndex, instance, new Translation { Value = bulletSpawnPos });
-                        entityCommandBuffer.SetComponent(entityInQueryIndex, instance, new Rotation { Value = bulletRot });
-                        //entityCommandBuffer.SetComponent(instance, new HealthPoints { Hp = 9000 });
-                        entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new Scale { Value = 0.15f });
-                        entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletMove { MoveDirection = moveDirection+offset, Speed = bulletSpeed });
-                        entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletDamage { Damage = 1 });
+                        for (int y = -5; y < 5; y++)
+                        {
+                            var instance = entityCommandBuffer.Instantiate(entityInQueryIndex, bulletPrefabData.Entity);
+                            var offset = new Vector3(spreadRatioTemp * x / -5.0f, spreadRatioTemp * y / 5.0f, 0);
+                            entityCommandBuffer.SetComponent(entityInQueryIndex, instance, new Translation { Value = bulletSpawnPos+offset });
+                            entityCommandBuffer.SetComponent(entityInQueryIndex, instance, new Rotation { Value = bulletRot });
+                            entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new Scale { Value = 0.15f });
+                            entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletMove { MoveDirection = moveDirection + offset, Speed = bulletSpeed });
+                            entityCommandBuffer.AddComponent(entityInQueryIndex, instance, new BulletDamage { Damage = 1 });
+                        }
                     }
 
                 }).Schedule(inputDeps);
