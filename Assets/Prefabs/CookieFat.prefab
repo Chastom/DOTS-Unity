@@ -182,7 +182,7 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
-  m_GravityFactor: 0
+  m_GravityFactor: 0.05
   m_OverrideDefaultMassDistribution: 0
   m_CenterOfMass:
     x: 0
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DestroyPosY: -10
-  Damage: 10
+  Damage: 0
 --- !u!114 &2246959088509899187
 MonoBehaviour:
   m_ObjectHideFlags: 0

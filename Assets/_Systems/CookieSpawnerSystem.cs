@@ -24,27 +24,33 @@ public class CookieSpawnerSystem : JobComponentSystem
         { 
             cookieSpawner.CurrentSpawnTimer -= deltaTime;
 
-            if (cookieSpawner.CurrentSpawnTimer <= 0)
+            //if ()
+
+            if (!cookieSpawner.IsBoosActive)
             {
-                Entity instance = new Entity();
-
-                switch (randomCookieIndex)
+                if (cookieSpawner.CurrentSpawnTimer <= 0)
                 {
-                    case 0: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); break;
-                    case 1: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFat); break;
-                    case 2: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFast); break;
-                    case 3: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieMashineGun); break;
-                    case 4: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieShotgun); break;
+                    Entity instance = new Entity();
 
-                    default: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); Debug.Log("Bad!@!@!@!@ Wrong cookie index"); break;
+                    switch (randomCookieIndex)
+                    {
+                        case 0: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); break;
+                        case 1: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFat); break;
+                        case 2: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieFast); break;
+                        case 3: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieMashineGun); break;
+                        case 4: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieShotgun); break;
 
+                        default: instance = entityCommandBuffer.Instantiate(cookieSpawner.cookieNormal); Debug.Log("Bad!@!@!@!@ Wrong cookie index"); break;
+
+                    }
+
+                    var position = new float3(10 - (float)randomPosRatio * 20, cookieSpawner.SpawnPosY, 5);
+                    entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
+
+                    cookieSpawner.CurrentSpawnTimer = cookieSpawner.SpawnTime;
                 }
-
-                var position = new float3(10 - (float)randomPosRatio * 20, cookieSpawner.SpawnPosY, 5);
-                entityCommandBuffer.SetComponent(instance, new Translation { Value = position });
-
-                cookieSpawner.CurrentSpawnTimer = cookieSpawner.SpawnTime;
             }
+           
 
         }).Run();
 

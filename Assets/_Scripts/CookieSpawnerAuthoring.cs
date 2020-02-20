@@ -7,6 +7,11 @@ public class CookieSpawnerAuthoring : MonoBehaviour, IConvertGameObjectToEntity,
 {
     public GameObject[] CookiePrefabs;
 
+    public GameObject bossPrefab;
+
+
+   
+
     public float SpawnTime;
     public float SpawnPosY;
 

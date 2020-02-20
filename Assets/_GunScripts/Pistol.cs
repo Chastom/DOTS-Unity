@@ -20,9 +20,12 @@ public class Pistol : JobComponentSystem
             {
                 hitPos = ray.GetPoint(distanceToPlane);
 
-                var bulletSpeed = 30;
+                var bulletSpeed = 50;
                 var bulletSpawnPos = GunManager.instance.Camera.transform.position;
-                var moveDirection = (hitPos - GunManager.instance.Camera.transform.position).normalized;
+                bulletSpawnPos.y -= 1f;
+                var moveDirection = (hitPos - bulletSpawnPos);
+                //moveDirection.y -= 1f;
+                moveDirection = moveDirection.normalized;
 
                 var ecbSystem = World.GetExistingSystem<BeginSimulationEntityCommandBufferSystem>();
                 var entityCommandBuffer = ecbSystem.CreateCommandBuffer();
