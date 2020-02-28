@@ -35,7 +35,7 @@ public class Shotgun : JobComponentSystem
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         JobHandle returnDeps = inputDeps;
-        if (GunManager.instance.CurrentGun == Gun.Shotgun && Input.GetMouseButtonDown(0) && ReloadTime <= 0)
+        if (GunManager.instance.CurrentGun == Gun.Shotgun && Input.GetMouseButtonDown(0))
         {
             Vector3 mousePosition = Input.mousePosition;
             Ray ray = GunManager.instance.Camera.ScreenPointToRay(mousePosition);
@@ -95,7 +95,7 @@ public class Shotgun : JobComponentSystem
                         entityCommandBuffer.AddComponent(instance, new CompositeScale { Value = newScale });
                         entityCommandBuffer.AddComponent(instance, new BulletMove { MoveDirection = temp, Speed = 30f });
                         entityCommandBuffer.SetComponent(instance, new Rotation { Value = bulletRot });
-                        entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 5 });
+                        entityCommandBuffer.AddComponent(instance, new BulletDamage { Damage = 3 });
                     }                    
 
                 }).Run();

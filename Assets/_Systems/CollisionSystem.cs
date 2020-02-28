@@ -6,7 +6,6 @@ using Unity.Jobs;
 using Unity.Physics;
 using Unity.Physics.Systems;
 using Unity.Mathematics;
-using Unity.Burst;
 
 public class CollisionSystem : JobComponentSystem
 {
